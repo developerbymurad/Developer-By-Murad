@@ -1,8 +1,8 @@
 <?php
-$hostname = "localhost";
-$username = "appktop_developerbymurad";
-$password = "appktop_developerbymurad";
-$database = "appktop_developerbymurad";
+$hostname = "sql301.infinityfree.com";
+$username = "if0_38654605";
+$password = "SkMuradBoss69";
+$database = "if0_38654605";
 
 header('Content-Type: application/json');
 

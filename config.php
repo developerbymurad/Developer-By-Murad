@@ -1,8 +1,8 @@
 <?php
 $hostname = "localhost";
-$username = "root";
-$password = "";
-$database = "Demo";
+$username = "appktop_developerbymurad";
+$password = "appktop_developerbymurad";
+$database = "appktop_developerbymurad";
 
 header('Content-Type: application/json');
 

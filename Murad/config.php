@@ -1,5 +1,5 @@
 <?php
-$hostname = "sql307.infinityfree.com";
+$hostname = "localhost";
 $username = "if0_38662936";
 $password = "Murad697";
 $database = "if0_38662936_sk_murad";

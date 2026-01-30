@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Update Key.json on GitHub</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input, button { padding: 10px; font-size: 16px; }
+    #status { margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+  <h2>Update Key.json in GitHub Repo</h2>
+
+  <input type="text" id="keyInput" placeholder="New Key লিখো এখানে">
+  <button onclick="updateKey()">Enter</button>
+
+  <p id="status"></p>
+
+<script>
+async function updateKey() {
+  const newKey = document.getElementById("keyInput").value;
+  if (!newKey) return alert("New Key লিখো আগে");
+
+  const OWNER = "developerbymurad";
+  const REPO = "Developer-By-Murad";  
+  const FILE_PATH = "Key.json";
+  const TOKEN = "XXXXXXXXX"; // GitHub token
+
+  const apiUrl = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`;
+
+  // প্রথমে .json ফাইলটি GET করে SHA পাওয়া লাগে
+  const getRes = await fetch(apiUrl, {
+    headers: {
+      "Authorization": "Bearer " + TOKEN,
+      "Accept": "application/vnd.github.v3+json",
+    }
+  });
+  const getData = await getRes.json();
+
+  if (!getData.sha) {
+    document.getElementById("status").innerText = "File এর SHA পাওয়া যায়নি!";
+    return;
+  }
+
+  // নতুন JSON কনটেন্ট
+  const updatedJson = {
+    key: newKey
+  };
+
+  const updateRes = await fetch(apiUrl, {
+    method: "PUT",
+    headers: {
+      "Authorization": "Bearer " + TOKEN,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      message: "Update key via Web UI",
+      content: btoa(JSON.stringify(updatedJson, null, 2)),
+      sha: getData.sha
+    })
+  });
+
+  if (updateRes.ok) {
+    document.getElementById("status").innerText = "Key.json সফলভাবে আপডেট হয়েছে! 🎉";
+  } else {
+    document.getElementById("status").innerText = "Error: আপডেট হয়নি!";
+  }
+}
+</script>
+
+</body>
+</html>
